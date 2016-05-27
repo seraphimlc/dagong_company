@@ -1,13 +1,11 @@
-package com.dagong.mq.evaluation;
+package com.dagong.mq.company;
 
 import com.alibaba.dubbo.common.json.JSON;
 import com.alibaba.dubbo.common.json.ParseException;
 import com.alibaba.rocketmq.common.message.MessageExt;
 import com.dagong.mq.MessageProcessor;
-import com.dagong.pojo.Company;
-import com.dagong.pojo.Evaluation;
-import com.dagong.pojo.Job;
-import com.dagong.service.EvaluationService;
+import com.dagong.service.CompanyService;
+import org.apache.ibatis.ognl.Evaluation;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,14 +19,14 @@ import java.util.List;
  */
 
 @Service
-public class CreateEvaluationMessageProcessor extends MessageProcessor {
+public class CreateCompanyMessageProcessor extends MessageProcessor {
 
 
     @Resource
-    private EvaluationService evaluationService;
+    private CompanyService companyService;
 
-    public CreateEvaluationMessageProcessor() {
-        this.setTopic("evaluation");
+    public CreateCompanyMessageProcessor() {
+        this.setTopic("company");
         this.setTag("create");
     }
 
@@ -48,19 +46,7 @@ public class CreateEvaluationMessageProcessor extends MessageProcessor {
                 String type=map.get("type");
                 String evaluationId = map.get("id");
                 Evaluation evaluation = null;
-                switch(type) {
-                    case "job":
-                        evaluation = evaluationService.getJobEvaluationById(evaluationId);
-                        break;
-                    case "user":
-                        evaluation = evaluationService.getUserEvaluationById(evaluationId);
-                        break;
-                    case "company":
-                        evaluation = evaluationService.getCompnayEvaluationById(evaluationId);
-                        break;
-                    default:
-                        break;
-                }
+
                 if(evaluation!=null){
                     evaluationList.add(evaluation);
                 }

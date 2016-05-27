@@ -1,4 +1,4 @@
-package com.dagong.evaluation.vo;
+package com.dagong.company.vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
