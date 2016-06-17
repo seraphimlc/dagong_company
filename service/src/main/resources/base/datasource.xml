@@ -10,10 +10,10 @@
 
     <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
+        <property name="url" value="${company.jdbc.url}"/>
+        <property name="username" value="${company.jdbc.username}"/>
         <!-- 123456 加密后的样子 -->
-        <property name="password" value="${jdbc.password}"/>
+        <property name="password" value="${company.jdbc.password}"/>
         <property name="initialSize" value="${jdbc.pool.minIdle}"/>
         <property name="maxActive" value="${jdbc.pool.maxActive}"/>
         <property name="minIdle" value="${jdbc.pool.minIdle}"/>

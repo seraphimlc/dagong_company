@@ -7,8 +7,10 @@ import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -22,14 +24,20 @@ public class SearchService {
 
     private TransportClient transportClient = null;
     private static final int PAGE_SIZE = 10;
-    private final String INDEX = "test";
-    private final String TYPE = "company";
+    private final String INDEX = "company";
+    private final String TYPE = "info";
 
+    @Value("${searchEngine.address}")
+    private String searchAddress = null;
 
-    public SearchService() {
+    @Value("${searchEngine.port}")
+    private int searchPort = 0;
+
+    @PostConstruct
+    public void init() {
         try {
             transportClient = TransportClient.builder().build()
-                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("172.16.54.144"), 9300));
+                    .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(searchAddress), searchPort));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
